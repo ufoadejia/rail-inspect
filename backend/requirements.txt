@@ -8,7 +8,10 @@ SQLAlchemy==2.0.29
 Pillow==10.0.1
 httpx==0.24.1
 loguru==0.7.2
-numpy                      # 不锁版本，让 pip 自己选有 wheel 的
+
+# numpy 可选：装上就加速向量计算，装不上走纯 Python 也能跑
+# 如果 pip install numpy 卡住，注释掉这行即可
+numpy
 
 # ===== 大模型 SDK（可选，无 key 时自动走 mock） =====
 # dashscope 依赖较多，若装不上可注释掉，系统会自动走 mock

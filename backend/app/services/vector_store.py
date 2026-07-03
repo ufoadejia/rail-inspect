@@ -138,12 +138,11 @@ def search_image(query_vec: List[float], topk: int = 5) -> List[dict]:
 
 
 def _mem_search(query_vec: List[float], field: str, topk: int) -> List[dict]:
-    import numpy as np
-    q = np.array(query_vec)
+    from app.services.embedding import cosine_similarity
     scored = []
     for item in _mem_store:
-        v = np.array(item.get(field) or [0.0] * len(query_vec))
-        sim = float(q @ v / (np.linalg.norm(q) * np.linalg.norm(v) + 1e-9))
+        v = item.get(field) or [0.0] * len(query_vec)
+        sim = cosine_similarity(query_vec, v)
         scored.append({"score": sim, "doc_type": item.get("doc_type"),
                        "source": item.get("source"), "title": item.get("title"),
                        "content": item.get("content"), "image_url": item.get("image_url")})
