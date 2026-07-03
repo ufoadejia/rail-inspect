@@ -1,0 +1,26 @@
+# ===== LoongArch / 麒麟环境核心依赖 =====
+# 注意：pydantic 必须锁 v1，v2 的 pydantic-core 需要 Rust 编译，LoongArch 上跑不通
+fastapi==0.99.1
+uvicorn==0.22.0            # 0.22 不依赖 httptools 的预编译 wheel，更稳
+python-multipart==0.0.6
+pydantic==1.10.13         # 纯 Python，无需 Rust
+SQLAlchemy==2.0.29
+Pillow==10.0.1
+httpx==0.24.1
+loguru==0.7.2
+numpy                      # 不锁版本，让 pip 自己选有 wheel 的
+
+# ===== 大模型 SDK（可选，无 key 时自动走 mock） =====
+# dashscope 依赖较多，若装不上可注释掉，系统会自动走 mock
+dashscope
+
+# ===== 可选：报告导出 Word（装不上会自动降级为 txt） =====
+python-docx
+
+# ===== 以下默认不装，LoongArch 上无需 =====
+# psycopg2-binary          # PostgreSQL 驱动，用 SQLite 不需要
+# pydantic-settings        # v2 才需要，v1 的 BaseSettings 在 pydantic 内置
+# pymilvus                 # Milvus 客户端，未装则降级内存检索
+# minio                    # 对象存储，未装则降级本地文件
+# sentence-transformers    # bge/CLIP 真实模型
+# torch                    # 太重，不要
